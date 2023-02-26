@@ -11,31 +11,38 @@ use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        Schema::defaultStringLength(191);
-    }
+	/**
+	 * Register any application services.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+		Schema::defaultStringLength(191);
+	}
 
-    /**
-     * Bootstrap any application services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        Blade::directive('routeactive', function ($route) {
-            return "<?php echo Route::currentRouteNamed($route) ? 'class=\"active\"' : '' ?>";
-        });
+	// Laravel: интернет магазин ч.15: Blade Custom Directive
 
-        Blade::if('admin', function () {
-            return Auth::check() && Auth::user()->isAdmin();
-        });
+	/**
+	 * Bootstrap any application services.
+	 * 
+	 * Допишем свои расширения для Blade, чтобы использовать их в шаблоне
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		// расширение для шаблона: layouts/master (название одним словом)
+		Blade::directive('routeactive', function ($route) {
+			// в скомпилированном шаблоне в storage/framework/views будет подставляться: 
+			return "<?php echo Route::currentRouteNamed($route) ? 'class=\"active\"' : '' ?>";
+		});
 
-        Product::observe(ProductObserver::class);
-    }
+		// сформируем кастомный if, что бы в шаблонах проверять, авторизован ли пользователь и является ли он администратором (ч.15)
+		Blade::if('admin', function () {
+			return Auth::check() && Auth::user()->isAdmin();
+		});
+
+		Product::observe(ProductObserver::class);
+	}
 }

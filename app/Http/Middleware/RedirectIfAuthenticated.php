@@ -7,20 +7,22 @@ use Illuminate\Support\Facades\Auth;
 
 class RedirectIfAuthenticated
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
-     * @return mixed
-     */
-    public function handle($request, Closure $next, $guard = null)
-    {
-        if (Auth::guard($guard)->check()) {
-            return redirect()->route('home');
-        }
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure  $next
+	 * @param  string|null  $guard
+	 * @return mixed
+	 */
 
-        return $next($request);
-    }
+	// Laravel: интернет магазин ч.10: Middleware Авторизации
+	public function handle($request, Closure $next, $guard = null)
+	{
+		if (Auth::guard($guard)->check()) {
+			return redirect()->route('home');
+		}
+
+		return $next($request);
+	}
 }

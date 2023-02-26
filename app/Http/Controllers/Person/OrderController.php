@@ -9,18 +9,20 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
-    public function index()
-    {
-        $orders = Auth::user()->orders()->active()->paginate(10);
-        return view('auth.orders.index', compact('orders'));
-    }
+	public function index()
+	{
+		// получим заказы, которые принадлежат пользователю (ч.15)
+		$orders = Auth::user()->orders()->active()->paginate(10);
+		return view('auth.orders.index', compact('orders'));
+	}
 
-    public function show(Order $order)
-    {
-        if (!Auth::user()->orders->contains($order)) {
-            return back();
-        }
+	public function show(Order $order)
+	{
+		// проверим что заказ принадлежит данному пользователю (ч.15)
+		if (!Auth::user()->orders->contains($order)) {
+			return back();
+		}
 
-        return view('auth.orders.show', compact('order'));
-    }
+		return view('auth.orders.show', compact('order'));
+	}
 }

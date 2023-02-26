@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    /*
+	/*
     |--------------------------------------------------------------------------
     | Login Controller
     |--------------------------------------------------------------------------
@@ -19,24 +19,25 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+	use AuthenticatesUsers;
 
-    protected function redirectTo()
-    {
-        if (Auth::user()->isAdmin()) {
-            return route('home');
-        } else {
-            return route('person.orders.index');
-        }
-    }
+	// Laravel: интернет магазин ч.10: Middleware Авторизации (+ ч.15)
+	protected function redirectTo()
+	{
+		if (Auth::user()->isAdmin()) {
+			return route('home');
+		} else {
+			return route('person.orders.index');
+		}
+	}
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
+	/**
+	 * Create a new controller instance.
+	 *
+	 * @return void
+	 */
+	public function __construct()
+	{
+		$this->middleware('guest')->except('logout');
+	}
 }

@@ -2,27 +2,30 @@
 
 namespace App\Http\Middleware;
 
+
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
 class CheckIsAdmin
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @return mixed
-     */
-    public function handle($request, Closure $next)
-    {
-        $user = Auth::user();
+	/**
+	 * Handle an incoming request.
+	 *
+	 * @param  \Illuminate\Http\Request  $request
+	 * @param  \Closure  $next
+	 * @return mixed
+	 */
 
-        if (!$user->isAdmin()) {
-            session()->flash('warning', 'У вас нет прав администратора');
-            return redirect()->route('index');
-        }
+	//Laravel: интернет магазин ч.11: Создание Middleware, Auth
+	public function handle($request, Closure $next)
+	{
+		$user = Auth::user();
 
-        return $next($request);
-    }
+		if (!$user->isAdmin()) {
+			session()->flash('warning', 'У вас нет прав администратора');
+			return redirect()->route('index');
+		}
+
+		return $next($request);
+	}
 }
