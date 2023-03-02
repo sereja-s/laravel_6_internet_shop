@@ -12,6 +12,9 @@ class OrderController extends Controller
 	public function index()
 	{
 		// получим заказы, которые принадлежат пользователю (ч.15)
+		// Laravel: интернет магазин ч.18: Pagination, QueryBuilder, Фильтры
+		// Laravel: интернет магазин ч.20: Scope, Оптимизация запросов к БД
+
 		$orders = Auth::user()->orders()->active()->paginate(10);
 		return view('auth.orders.index', compact('orders'));
 	}

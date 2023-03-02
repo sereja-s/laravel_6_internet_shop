@@ -18,13 +18,12 @@ class AppServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+		// Laravel: интернет магазин ч.21: Деплой на хостинг Timeweb
 		Schema::defaultStringLength(191);
 	}
 
 	// Laravel: интернет магазин ч.15: Blade Custom Directive
-
-	/**
-	 * Bootstrap any application services.
+	/**	 
 	 * 
 	 * Допишем свои расширения для Blade, чтобы использовать их в шаблоне
 	 *
@@ -43,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
 			return Auth::check() && Auth::user()->isAdmin();
 		});
 
+		// Laravel: интернет магазин ч.25: Observer (подписка на отсутствующий товар)
 		Product::observe(ProductObserver::class);
 	}
 }

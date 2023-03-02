@@ -10,6 +10,9 @@ class OrderController extends Controller
 	// Laravel: интернет магазин ч.10: Middleware Авторизации
 	public function index()
 	{
+		// Laravel: интернет магазин ч.18: Pagination, QueryBuilder, Фильтры
+		// Laravel: интернет магазин ч.20: Scope, Оптимизация запросов к БД
+
 		$orders = Order::active()->paginate(10);
 		return view('auth.orders.index', compact('orders'));
 	}
@@ -19,6 +22,7 @@ class OrderController extends Controller
 	 */
 	public function show(Order $order)
 	{
+		// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete
 		$skus = $order->skus()->withTrashed()->get();
 		return view('auth.orders.show', compact('order', 'skus'));
 	}

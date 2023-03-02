@@ -9,6 +9,8 @@ use App\Models\Sku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+// Laravel: интернет магазин ч.23: Model Injection, new Class
+
 class BasketController extends Controller
 {
 	public function basket()
@@ -25,6 +27,7 @@ class BasketController extends Controller
 			session()->flash('warning', __('basket.coupon.not_available'));
 			return redirect()->route('basket');
 		}
+		// Laravel: интернет магазин ч.24: Отправка Email
 		$email = Auth::check() ? Auth::user()->email : $request->email;
 		if ($basket->saveOrder($request->name, $request->phone, $email)) {
 			session()->flash('success', __('basket.you_order_confirmed'));
@@ -35,8 +38,12 @@ class BasketController extends Controller
 		return redirect()->route('index');
 	}
 
+	/** 
+	 * Метод для оформления заказа
+	 */
 	public function basketPlace()
 	{
+		// Laravel: интернет магазин ч.23: Model Injection, new Class
 		$basket = new Basket();
 		$order = $basket->getOrder();
 		if (!$basket->countAvailable()) {
@@ -52,6 +59,7 @@ class BasketController extends Controller
 	 */
 	public function basketAdd(Sku $skus)
 	{
+		// Laravel: интернет магазин ч.23: Model Injection, new Class
 		$result = (new Basket(true))->addSku($skus);
 
 		if ($result) {

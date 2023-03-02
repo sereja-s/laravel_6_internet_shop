@@ -20,6 +20,8 @@ class BasketIsNotEmpty
 	{
 		$order = session('order');
 
+		//Laravel: интернет магазин ч.20: Scope, Оптимизация запросов к БД
+
 		if (!is_null($order) && $order->getFullSum() > 0) {
 			return $next($request);
 		}

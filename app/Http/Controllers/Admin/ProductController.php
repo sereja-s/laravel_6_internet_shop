@@ -19,6 +19,8 @@ class ProductController extends Controller
 	 */
 	public function index()
 	{
+		// Laravel: интернет магазин ч.18: Pagination, QueryBuilder, Фильтры
+
 		$products = Product::paginate(10);
 		return view('auth.products.index', compact('products'));
 	}
@@ -97,6 +99,7 @@ class ProductController extends Controller
 			$params['image'] = $request->file('image')->store('products');
 		}
 
+		// Laravel: интернет магазин ч.17: Checkbox, Mutator
 		foreach (['new', 'hit', 'recommend'] as $fieldName) {
 			if (!isset($params[$fieldName])) {
 				$params[$fieldName] = 0;

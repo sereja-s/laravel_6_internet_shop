@@ -9,8 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
+	// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete
+	// добавили трейт
 	use SoftDeletes, Translatable;
 
+	// Laravel: интернет магазин +ч.17: Checkbox, Mutator, ч.22: Кол-во товара, Soft Delete
 	protected $fillable = [
 		'name', 'code', 'price', 'category_id', 'description', 'image', 'hit', 'new', 'recommend', 'count', 'name_en',
 		'description_en'
@@ -37,10 +40,13 @@ class Product extends Model
 		return $this->belongsToMany(Property::class, 'property_product')->withTimestamps();
 	}
 
+	// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete
 	public function scopeByCode($query, $code)
 	{
 		return $query->where('code', $code);
 	}
+
+	// Laravel: интернет магазин ч.20: Scope(позволяет расширять запросы к БД), Оптимизация запросов к БД
 
 	public function scopeHit($query)
 	{
@@ -57,6 +63,9 @@ class Product extends Model
 		return $query->where('recommend', 1);
 	}
 
+	// Laravel: интернет магазин ч.17: Checkbox, Mutator(функция, которая будет вызываться перед тем как будет 
+	// происходить сохранение соответствующего атрибута)
+
 	public function setNewAttribute($value)
 	{
 		$this->attributes['new'] = $value === 'on' ? 1 : 0;
@@ -71,6 +80,8 @@ class Product extends Model
 	{
 		$this->attributes['recommend'] = $value === 'on' ? 1 : 0;
 	}
+
+	// Laravel: интернет магазин ч.17: Checkbox, Mutator
 
 	public function isHit()
 	{

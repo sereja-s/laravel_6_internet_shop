@@ -19,6 +19,8 @@ class CategoryController extends Controller
 	 */
 	public function index()
 	{
+		// Laravel: интернет магазин ч.18: Pagination, QueryBuilder, Фильтры
+
 		$categories = Category::paginate(10);
 		return view('auth.categories.index', compact('categories'));
 	}

@@ -6,24 +6,26 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 
+// Laravel: интернет магазин ч.16: Seeder (сбросить проет в начальное состояние)
+
 class ResetController extends Controller
 {
-    public function reset()
-    {
-        Artisan::call('migrate:fresh --seed');
+	public function reset()
+	{
+		Artisan::call('migrate:fresh --seed');
 
-        foreach (['categories', 'products'] as $folder) {
-            Storage::deleteDirectory($folder);
-            Storage::makeDirectory($folder);
+		foreach (['categories', 'products'] as $folder) {
+			Storage::deleteDirectory($folder);
+			Storage::makeDirectory($folder);
 
-            $files = Storage::disk('reset')->files($folder);
+			$files = Storage::disk('reset')->files($folder);
 
-            foreach ($files as $file) {
-                Storage::put($file, Storage::disk('reset')->get($file));
-            }
-        }
+			foreach ($files as $file) {
+				Storage::put($file, Storage::disk('reset')->get($file));
+			}
+		}
 
-        session()->flash('success', __('main.project_reset'));
-        return redirect()->route('index');
-    }
+		session()->flash('success', __('main.project_reset'));
+		return redirect()->route('index');
+	}
 }

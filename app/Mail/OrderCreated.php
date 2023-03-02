@@ -7,36 +7,38 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
+// Laravel: интернет магазин ч.24: Отправка Email
+
 class OrderCreated extends Mailable
 {
-    use Queueable, SerializesModels;
+	use Queueable, SerializesModels;
 
-    protected $name;
-    protected $order;
+	protected $name;
+	protected $order;
 
-    /**
-     * OrderCreated constructor.
-     * @param $name
-     * @param $order
-     */
-    public function __construct($name, Order $order)
-    {
-        $this->name = $name;
-        $this->order = $order;
-    }
+	/**
+	 * OrderCreated constructor.
+	 * @param $name
+	 * @param $order
+	 */
+	public function __construct($name, Order $order)
+	{
+		$this->name = $name;
+		$this->order = $order;
+	}
 
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        $fullSum = $this->order->getFullSum();
-        return $this->view('mail.order_created', [
-            'name' => $this->name,
-            'fullSum' => $fullSum,
-            'order' => $this->order
-        ]);
-    }
+	/**
+	 * Build the message.
+	 *
+	 * @return $this
+	 */
+	public function build()
+	{
+		$fullSum = $this->order->getFullSum();
+		return $this->view('mail.order_created', [
+			'name' => $this->name,
+			'fullSum' => $fullSum,
+			'order' => $this->order
+		]);
+	}
 }

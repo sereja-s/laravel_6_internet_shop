@@ -4,34 +4,36 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+// Laravel: интернет магазин ч.25: Observer (подписка на отсутствующий товар)
+
 class SubscriptionRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     *
-     * @return bool
-     */
-    public function authorize()
-    {
-        return true;
-    }
+	/**
+	 * Determine if the user is authorized to make this request.
+	 *
+	 * @return bool
+	 */
+	public function authorize()
+	{
+		return true;
+	}
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array
-     */
-    public function rules()
-    {
-        return [
-            'email' => 'required|email',
-        ];
-    }
+	/**
+	 * Get the validation rules that apply to the request.
+	 *
+	 * @return array
+	 */
+	public function rules()
+	{
+		return [
+			'email' => 'required|email',
+		];
+	}
 
-    public function messages()
-    {
-        return [
-            'email' => 'Поле email должно содержать корректный email адрес',
-        ];
-    }
+	public function messages()
+	{
+		return [
+			'email' => 'Поле email должно содержать корректный email адрес',
+		];
+	}
 }
