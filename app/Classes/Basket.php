@@ -22,6 +22,9 @@ class Basket
 	 */
 	public function __construct($createOrder = false)
 	{
+		// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
+
+		// получим в переменную весь заказ из сессии
 		$order = session('order');
 
 		if (is_null($order) && $createOrder) {
@@ -73,6 +76,9 @@ class Basket
 
 	// Laravel: интернет магазин ч.23: Model Injection, new Class
 	// Laravel: интернет магазин ч.24: Отправка Email
+	/** 
+	 * Метод для сохранения заказов
+	 */
 	public function saveOrder($name, $phone, $email)
 	{
 		if (!$this->countAvailable(true)) {
@@ -90,6 +96,8 @@ class Basket
 	 */
 	public function removeSku(Sku $sku)
 	{
+		// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
+
 		if ($this->order->skus->contains($sku)) {
 			$pivotRow = $this->order->skus->where('id', $sku->id)->first();
 			if ($pivotRow->countInOrder < 2) {
@@ -106,6 +114,7 @@ class Basket
 	public function addSku(Sku $sku)
 	{
 		if ($this->order->skus->contains($sku)) {
+			// найдём записб, которая будет соответствовать продукту и возмём первую
 			$pivotRow = $this->order->skus->where('id', $sku->id)->first();
 			if ($pivotRow->countInOrder >= $sku->count) {
 				return false;

@@ -18,6 +18,8 @@ class BasketIsNotEmpty
 	 */
 	public function handle($request, Closure $next)
 	{
+		// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
+
 		$order = session('order');
 
 		//Laravel: интернет магазин ч.20: Scope, Оптимизация запросов к БД

@@ -1,0 +1,33 @@
+Добавим конроллер (укажем что он использует ресурс и добавим соответствующую модель):
+php artisan make:controller Admin/PropertyController --resource --model=Models/Property
+
+В routes/web.php добавим: Route::resource('properties', 'PropertyController');
+
+
+Чтобы посмотреть маршруты, которые добавились, в консоли пропишем команду (в конце добавили уточнения пути маршрута):
+php artisan route:list --path=admin/prop
+
+
+Все представления(views) соответствующей модели должны быть прописаны по адресу: resources/views/auth/properties
+
+В меню админки: resources/views/auth/layouts/master.blade.php добавляем новый пункт с указанием ссылки:
+<li><a href="{{ route('properties.index') }}">Свойства</a>
+
+Для свойств добавим request-класс (он сгенерируется по адресу: App\Http\Requests): 
+php artisan make:request PropertyRequest
+
+далее в его методе: public function authorize() меняем на return true; и в методе: public function rules() прописываем правила для полей формы добавления новых свойств
+
+В PropertyController в методах: public function store(PropertyRequest $request), public function update(PropertyRequest $request, Property $property) в параметрах на входе вместо: Request указываем: PropertyRequest
+
+----------------------------------------------------------------------------------------------------------------------
+
+Аналогично делаем для набора свойств:
+
+php artisan make:controller Admin/PropertyOptionController --resource --model=Models/PropertyOption
+php artisan make:request PropertyOptionRequest
+
+Добавим маршрут:
+Route::resource('properties/{property}/property-options', 'PropertyOptionController');
+
+

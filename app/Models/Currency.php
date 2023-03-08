@@ -4,17 +4,22 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+// Laravel: интернет магазин ч.28: Мультивалюта
+
 class Currency extends Model
 {
-    protected $fillable = ['rate'];
+	protected $fillable = ['rate'];
 
-    public function scopeByCode($query, $code)
-    {
-        return $query->where('code', $code);
-    }
+	public function scopeByCode($query, $code)
+	{
+		return $query->where('code', $code);
+	}
 
-    public function isMain()
-    {
-        return $this->is_main === 1;
-    }
+	/*** 
+	 * Метод показывает, что валюта является базовой
+	 */
+	public function isMain()
+	{
+		return $this->is_main === 1;
+	}
 }

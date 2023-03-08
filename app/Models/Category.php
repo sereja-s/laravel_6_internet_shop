@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+	// ч.27: Eloquent Localization - Мультиязычность данных БД
 	use Translatable;
 
 	// поля которые можно заполнять в форме (для редактирования категорий в админке)

@@ -44,6 +44,7 @@ class MainController extends Controller
 		return view('index', compact('skus'));
 	}
 
+	// Laravel: интернет магазин ч.31: ViewComposer, Collection (map, flatten, take, mapToGroups)
 	public function categories()
 	{
 		return view('categories');
@@ -80,6 +81,7 @@ class MainController extends Controller
 		return redirect()->back()->with('success', __('product.we_will_update'));
 	}
 
+	// Laravel: интернет магазин ч.26: Localization - Мультиязычность
 	public function changeLocale($locale)
 	{
 		$availableLocales = ['ru', 'en'];
@@ -91,6 +93,7 @@ class MainController extends Controller
 		return redirect()->back();
 	}
 
+	// Laravel: интернет магазин ч.28: Мультивалюта
 	public function changeCurrency($currencyCode)
 	{
 		$currency = Currency::byCode($currencyCode)->firstOrFail();

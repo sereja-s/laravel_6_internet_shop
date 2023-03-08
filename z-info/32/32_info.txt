@@ -1,0 +1,23 @@
+Сгенерируем модели с миграциями для создания соответствующих таблиц:
+
+php artisan make:model Models/Sku -m
+php artisan make:model Models/Property -m
+php artisan make:model Models/PropertyOption -m
+
+Создадим миграции для связей:
+
+php artisan make:migration create_sku_property_option_table --create=sku_property_option
+php artisan make:migration create_property_product_table --create=property_product
+
+Далее заполняем миграции необходимыми полями (некоторые необходимы для создания связей)
+
+Заполняем модели:
+
+в Sku в переменную: protected $fillable в массиве указываем поля из соответствующей таблицы, которые будем изменять
+далее указываем связи (здесь- с продуктом) и т.д. 
+Тоже для всех созданных моделей
+
+Запускаем миграции:
+
+php artisan migrate 
+(соответствующие таблицы будут созданы)

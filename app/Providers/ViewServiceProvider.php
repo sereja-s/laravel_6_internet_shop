@@ -6,32 +6,36 @@ use App\Services\CurrencyConversion;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
+// Laravel: интернет магазин ч.31: ViewComposer, Collection (map, flatten, take, mapToGroups)
+
 class ViewServiceProvider extends ServiceProvider
 {
-    /**
-     * Register services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
-    }
+	/**
+	 * Register services.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+		//
+	}
 
-    /**
-     * Bootstrap services.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        View::composer(['layouts.master', 'categories'], 'App\ViewComposers\CategoriesComposer');
-        View::composer(['layouts.master', 'auth.coupons.form'], 'App\ViewComposers\CurrenciesComposer');
-        View::composer(['layouts.master'], 'App\ViewComposers\BestProductsComposer');
+	/**
+	 * Bootstrap services.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		// добавим категории для всех страниц в указанных шаблонах
+		View::composer(['layouts.master', 'categories'], 'App\ViewComposers\CategoriesComposer');
+		View::composer(['layouts.master', 'auth.coupons.form'], 'App\ViewComposers\CurrenciesComposer');
+		View::composer(['layouts.master'], 'App\ViewComposers\BestProductsComposer');
 
-        View::composer('*', function ($view) {
-            $currencySymbol = CurrencyConversion::getCurrencySymbol();
-            $view->with('currencySymbol', $currencySymbol);
-        });
-    }
+		// для всех шаблонов
+		View::composer('*', function ($view) {
+			$currencySymbol = CurrencyConversion::getCurrencySymbol();
+			$view->with('currencySymbol', $currencySymbol);
+		});
+	}
 }

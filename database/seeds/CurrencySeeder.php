@@ -4,6 +4,8 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
+// Laravel: интернет магазин ч.28: Мультивалюта
+
 class CurrencySeeder extends Seeder
 {
 	/**
@@ -28,7 +30,7 @@ class CurrencySeeder extends Seeder
 				'code' => 'USD',
 				'symbol' => '$',
 				'is_main' => 0,
-				'rate' => 0,
+				'rate' => 0, // курс относительно рубля
 				'updated_at' => Carbon::now(),
 				'created_at' => Carbon::now(),
 			],

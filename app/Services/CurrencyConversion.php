@@ -5,94 +5,99 @@ namespace App\Services;
 use App\Models\Currency;
 use Carbon\Carbon;
 
+// Laravel: интернет магазин ч.28: Мультивалюта
+
 class CurrencyConversion
 {
-    public const DEFAULT_CURRENCY_CODE = 'RUB';
+	public const DEFAULT_CURRENCY_CODE = 'RUB';
 
-    protected static $container;
+	protected static $container;
 
-    public static function loadContainer()
-    {
-        if (is_null(self::$container)) {
-            $currencies = Currency::get();
-            foreach ($currencies as $currency) {
-                self::$container[$currency->code] = $currency;
-            }
-        }
-    }
+	public static function loadContainer()
+	{
+		if (is_null(self::$container)) {
+			$currencies = Currency::get();
+			foreach ($currencies as $currency) {
+				self::$container[$currency->code] = $currency;
+			}
+		}
+	}
 
-    public static function getCurrencies()
-    {
-        self::loadContainer();
+	public static function getCurrencies()
+	{
+		self::loadContainer();
 
-        return self::$container;
-    }
+		return self::$container;
+	}
 
-    public static function getCurrencyFromSession()
-    {
-        return session('currency', self::DEFAULT_CURRENCY_CODE);
-    }
+	public static function getCurrencyFromSession()
+	{
+		return session('currency', self::DEFAULT_CURRENCY_CODE);
+	}
 
-    public static function getCurrentCurrencyFromSession()
-    {
-        self::loadContainer();
-        $currencyCode = self::getCurrencyFromSession();
+	public static function getCurrentCurrencyFromSession()
+	{
+		self::loadContainer();
+		$currencyCode = self::getCurrencyFromSession();
 
-        foreach (self::$container as $currency) {
-            if ($currency->code === $currencyCode) {
-                return $currency;
-            }
-        }
-    }
+		foreach (self::$container as $currency) {
+			if ($currency->code === $currencyCode) {
+				return $currency;
+			}
+		}
+	}
 
-    public static function convert($sum, $originCurrencyCode = self::DEFAULT_CURRENCY_CODE, $targetCurrencyCode = null)
-    {
-        self::loadContainer();
+	public static function convert($sum, $originCurrencyCode = self::DEFAULT_CURRENCY_CODE, $targetCurrencyCode = null)
+	{
+		self::loadContainer();
 
-        $originCurrency = self::$container[$originCurrencyCode];
+		$originCurrency = self::$container[$originCurrencyCode];
 
-        if ($originCurrency->code != self::DEFAULT_CURRENCY_CODE) {
-            if ($originCurrency->rate != 0 || $originCurrency->updated_at->startOfDay() != Carbon::now()->startOfDay()) {
-                CurrencyRates::getRates();
-                self::loadContainer();
-                $originCurrency = self::$container[$originCurrencyCode];
-            }
-        }
+		// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
 
-        if (is_null($targetCurrencyCode)) {
-            $targetCurrencyCode = self::getCurrencyFromSession();
-        }
+		if ($originCurrency->code != self::DEFAULT_CURRENCY_CODE) {
+			if ($originCurrency->rate != 0 || $originCurrency->updated_at->startOfDay() != Carbon::now()->startOfDay()) {
+				CurrencyRates::getRates();
+				self::loadContainer();
+				$originCurrency = self::$container[$originCurrencyCode];
+			}
+		}
 
-        $targetCurrency = self::$container[$targetCurrencyCode];
-        if ($originCurrency->code != self::DEFAULT_CURRENCY_CODE) {
-            if ($targetCurrency->rate == 0 || $targetCurrency->updated_at->startOfDay() != Carbon::now()->startOfDay()) {
-                CurrencyRates::getRates();
-                self::loadContainer();
-                $targetCurrency = self::$container[$targetCurrencyCode];
-            }
-        }
+		if (is_null($targetCurrencyCode)) {
+			$targetCurrencyCode = self::getCurrencyFromSession();
+		}
 
-        return $sum / $originCurrency->rate * $targetCurrency->rate;
-    }
+		$targetCurrency = self::$container[$targetCurrencyCode];
+		// по условию: не обновлять валюту если она дефолтная (Laravel: интернет магазин ч.31: ViewComposer, Collection (map, flatten, take, mapToGroups))
+		if ($originCurrency->code != self::DEFAULT_CURRENCY_CODE) {
+			if ($targetCurrency->rate == 0 || $targetCurrency->updated_at->startOfDay() != Carbon::now()->startOfDay()) {
+				CurrencyRates::getRates();
+				self::loadContainer();
+				$targetCurrency = self::$container[$targetCurrencyCode];
+			}
+		}
 
-    public static function getCurrencySymbol()
-    {
-        self::loadContainer();
+		return $sum / $originCurrency->rate * $targetCurrency->rate;
+	}
 
-        $currencyFromSession = self::getCurrencyFromSession();
+	public static function getCurrencySymbol()
+	{
+		self::loadContainer();
 
-        $currency = self::$container[$currencyFromSession];
-        return $currency->symbol;
-    }
+		$currencyFromSession = self::getCurrencyFromSession();
 
-    public static function getBaseCurrency()
-    {
-        self::loadContainer();
+		$currency = self::$container[$currencyFromSession];
+		return $currency->symbol;
+	}
 
-        foreach (self::$container as $code => $currency) {
-            if ($currency->isMain()) {
-                return $currency;
-            }
-        }
-    }
+	public static function getBaseCurrency()
+	{
+		self::loadContainer();
+
+		foreach (self::$container as $code => $currency) {
+			if ($currency->isMain()) {
+				return $currency;
+			}
+		}
+	}
 }

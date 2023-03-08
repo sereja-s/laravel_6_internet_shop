@@ -9,11 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-	// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete
+	// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete, ч.27: Eloquent Localization - Мультиязычность данных БД
 	// добавили трейт
 	use SoftDeletes, Translatable;
 
-	// Laravel: интернет магазин +ч.17: Checkbox, Mutator, ч.22: Кол-во товара, Soft Delete
+	// Laravel: интернет магазин +ч.17: Checkbox, Mutator, ч.22: Кол-во товара, Soft Delete, ч.27: Eloquent Localization - Мультиязычность данных БД
+	// добавляем поля что бы могли их редактировать
 	protected $fillable = [
 		'name', 'code', 'price', 'category_id', 'description', 'image', 'hit', 'new', 'recommend', 'count', 'name_en',
 		'description_en'
@@ -21,7 +22,7 @@ class Product extends Model
 
 	// Laravel: интернет магазин ч.5: Eloquent связи
 	/** 
-	 * Метод  определяет обратное отношение "один к одному"(товар принадлежит к одной категории) 
+	 * Метод  определяет обратное отношение "один к одному"(продукт(товар) принадлежит к одной категории) 
 	 * Возвращает одну категорию, к которой принадлежит конкретный товар
 	 * (т.е. товар связывается со своей категорией и может получать все данные по ней из БД)
 	 */
@@ -30,11 +31,19 @@ class Product extends Model
 		return $this->belongsTo(Category::class);
 	}
 
+	// Laravel: интернет магазин ч.32: Товарные предложения. С чего начать?
+	/** 
+	 * Метод реализует связь продукта с товарными предложениями (один-ко-многим)
+	 */
 	public function skus()
 	{
 		return $this->hasMany(Sku::class);
 	}
 
+	// Laravel: интернет магазин ч.32: Товарные предложения. С чего начать?, ч.34: Plural & Singular
+	/** 
+	 * Метод реализует связь продуктов со свойствами (многие-ко-многим)
+	 */
 	public function properties()
 	{
 		return $this->belongsToMany(Property::class, 'property_product')->withTimestamps();

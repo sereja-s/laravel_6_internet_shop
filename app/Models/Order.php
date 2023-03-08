@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-	// Laravel: интернет магазин ч.23: Model Injection, new Class
+	// Laravel: интернет магазин ч.23: Model Injection, new Class, ч.30: Collection, Объект Eloquent без сохранения
 	protected $fillable = ['user_id', 'currency_id', 'sum', 'coupon_id'];
 
 	public function skus()
@@ -14,6 +14,7 @@ class Order extends Model
 		return $this->belongsToMany(Sku::class)->withPivot(['count', 'price'])->withTimestamps();
 	}
 
+	// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
 	public function currency()
 	{
 		return $this->belongsTo(Currency::class);
@@ -45,6 +46,8 @@ class Order extends Model
 
 	public function getFullSum($withCoupon = true)
 	{
+		// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
+
 		$sum = 0;
 
 		foreach ($this->skus as $sku) {
@@ -60,6 +63,7 @@ class Order extends Model
 
 	public function saveOrder($name, $phone)
 	{
+		// Laravel: интернет магазин ч.30: Collection, Объект Eloquent без сохранения
 		$this->name = $name;
 		$this->phone = $phone;
 		$this->status = 1;

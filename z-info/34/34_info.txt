@@ -1,0 +1,8 @@
+php artisan make:controller Admin/SkuController --resource --model=Models/Sku
+
+php artisan route:list --path=products/ 
+
+или более точно:
+php artisan route:list --path=admin/products/{product}/skus
+
+php artisan make:request SkuRequest

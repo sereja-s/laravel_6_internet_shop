@@ -6,28 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateSkuPropertyOptionTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('sku_property_option', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedInteger('property_option_id');
-            $table->unsignedInteger('sku_id');
-            $table->timestamps();
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('sku_property_option', function (Blueprint $table) {
+			$table->bigIncrements('id');
+			$table->unsignedInteger('property_option_id');
+			$table->unsignedInteger('sku_id');
+			$table->timestamps();
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::dropIfExists('sku_product');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::dropIfExists('sku_property_option');
+	}
 }

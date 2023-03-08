@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-// Laravel: интернет магазин ч.16: Seeder
+// Laravel: интернет магазин ч.16: Seeder, ч.28: Мультивалюта
 
 class DatabaseSeeder extends Seeder
 {

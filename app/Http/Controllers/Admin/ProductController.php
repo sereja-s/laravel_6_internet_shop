@@ -34,6 +34,8 @@ class ProductController extends Controller
 	public function create()
 	{
 		$categories = Category::get();
+
+		// Laravel: интернет магазин ч.34: Plural & Singular
 		$properties = Property::get();
 		return view('auth.products.form', compact('categories', 'properties'));
 	}
@@ -70,7 +72,7 @@ class ProductController extends Controller
 	}
 
 	/**
-	 * Метод редактирования товара
+	 * Метод показывает страницу формы редактирования товара
 	 *
 	 * @param  \App\Product  $product
 	 * @return \Illuminate\Http\Response
@@ -78,6 +80,8 @@ class ProductController extends Controller
 	public function edit(Product $product)
 	{
 		$categories = Category::get();
+
+		// Laravel: интернет магазин ч.34: Plural & Singular
 		$properties = Property::get();
 		return view('auth.products.form', compact('product', 'categories', 'properties'));
 	}
@@ -106,6 +110,10 @@ class ProductController extends Controller
 			}
 		}
 
+		//dd($request->property_id);
+
+		// Laravel: интернет магазин ч.34: Plural & Singular
+		// синхронизируем то, что у нас есть с тем что пришло
 		$product->properties()->sync($request->property_id);
 
 		$product->update($params);
