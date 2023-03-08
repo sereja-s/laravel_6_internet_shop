@@ -35,11 +35,14 @@ class Sku extends Model
 		return $this->belongsToMany(PropertyOption::class, 'sku_property_option')->withTimestamps();
 	}
 
+	// Laravel: интернет магазин ч.35: Eloquent: whereHas
 	public function isAvailable()
 	{
+		// проверяем что продукт не удалён и его кол-во больше нуля
 		return !$this->product->trashed() && $this->count > 0;
 	}
 
+	// Laravel: интернет магазин ч.35: Eloquent: whereHas
 	public function getPriceForCount()
 	{
 		if (!is_null($this->pivot)) {

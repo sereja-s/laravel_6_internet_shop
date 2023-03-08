@@ -53,13 +53,14 @@ class BasketController extends Controller
 		return view('order', compact('order'));
 	}
 
-	// Laravel: интернет магазин ч.6: Многие-ко-многим, Сессия
+	// Laravel: интернет магазин ч.6: Многие-ко-многим, Сессия +ч.35: Eloquent: whereHas
 	/** 
 	 * Метод отвечает за добавление товара в корзину
 	 */
 	public function basketAdd(Sku $skus)
 	{
 		// Laravel: интернет магазин ч.23: Model Injection, new Class
+		// Laravel: интернет магазин ч.35: Eloquent: whereHas
 		$result = (new Basket(true))->addSku($skus);
 
 		if ($result) {
@@ -71,6 +72,7 @@ class BasketController extends Controller
 		return redirect()->route('basket');
 	}
 
+	// Laravel: интернет магазин ч.35: Eloquent: whereHas
 	/** 
 	 * Метод удаления товаров из корзины
 	 */

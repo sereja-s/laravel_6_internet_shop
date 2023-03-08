@@ -53,6 +53,8 @@ class Basket
 	// в параметры добавляем флаг (позволит сделать товар недоступным если кто то уже добавил его в корзину и он закончился)
 	public function countAvailable($updateCount = false)
 	{
+		// Laravel: интернет магазин ч.35: Eloquent: whereHas
+
 		$skus = collect([]);
 		foreach ($this->order->skus as $orderSku) {
 			$sku = Sku::find($orderSku->id);
@@ -91,6 +93,7 @@ class Basket
 		return true;
 	}
 
+	// Laravel: интернет магазин ч.35: Eloquent: whereHas
 	/** 
 	 * Метод удаления продукта
 	 */
@@ -109,7 +112,7 @@ class Basket
 	}
 
 	/** 
-	 * Метод добавления продукта
+	 * Метод добавления продукта (Laravel: интернет магазин ч.35: Eloquent: whereHas)
 	 */
 	public function addSku(Sku $sku)
 	{

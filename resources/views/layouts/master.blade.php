@@ -84,6 +84,8 @@
 				<div class="col-lg-6">
 					<p>Самые популярные товары</p>
 					<ul>
+
+						<!-- Laravel: интернет магазин ч.35: Eloquent: whereHas -->
 						@foreach ($bestSkus as $bestSku)
 						<li><a href="{{ route('sku',
                 [$bestSku->product->category->code, $bestSku->product->code, $bestSku]) }}">

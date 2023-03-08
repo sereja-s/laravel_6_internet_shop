@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Mail;
 
 // Laravel: интернет магазин ч.25: Observer (подписка на отсутствующий товар)
 
+// +Laravel: интернет магазин ч.35: Eloquent: whereHas
 class Subscription extends Model
 {
 	protected $fillable = ['email', 'sku_id'];
@@ -18,13 +19,14 @@ class Subscription extends Model
 	}
 
 	/** 
-	 * Метод реализует связь один-к-одному с моделью Sku
+	 * Метод реализует связь один-к-одному с моделью Sku (+Laravel: интернет магазин ч.35: Eloquent: whereHas)
 	 */
 	public function sku()
 	{
 		return $this->belongsTo(Sku::class);
 	}
 
+	// +Laravel: интернет магазин ч.35: Eloquent: whereHas
 	public static function sendEmailsBySubscription(Sku $sku)
 	{
 		// получим все подписки

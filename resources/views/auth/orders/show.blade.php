@@ -20,6 +20,8 @@
 						</tr>
 					</thead>
 					<tbody>
+
+						<!-- Laravel: интернет магазин ч.35: Eloquent: whereHas -->
 						@foreach ($skus as $sku)
 						<tr>
 							<td>
@@ -33,6 +35,7 @@
 							<td>{{ $sku->pivot->price * $sku->pivot->count }} {{ $order->currency->symbol }}</td>
 						</tr>
 						@endforeach
+
 						<tr>
 							<td colspan="3">Общая стоимость:</td>
 							<td>{{ $order->sum }} {{ $order->currency->symbol }}</td>

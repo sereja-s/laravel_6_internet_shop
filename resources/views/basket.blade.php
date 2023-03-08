@@ -16,6 +16,8 @@
 			</tr>
 		</thead>
 		<tbody>
+
+			<!-- Laravel: интернет магазин ч.35: Eloquent: whereHas -->
 			@foreach($order->skus as $sku)
 			<tr>
 				<td>
@@ -43,6 +45,7 @@
 				<td>{{ $sku->price * $sku->countInOrder }} {{ $currencySymbol }}</td>
 			</tr>
 			@endforeach
+
 			<tr>
 				<td colspan="3">@lang('basket.full_cost'):</td>
 				@if($order->hasCoupon())

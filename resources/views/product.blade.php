@@ -7,6 +7,8 @@
 <h2>{{ $skus->product->category->name }}</h2>
 <p>@lang('product.price'): <b>{{ $skus->price }} {{ $currencySymbol }}</b></p>
 
+<!-- Laravel: интернет магазин ч.35: Eloquent: whereHas -->
+<!-- Перечисляем набор свойств товара(если они есть) -->
 @isset($skus->product->properties)
 @foreach ($skus->propertyOptions as $propertyOption)
 <h4>{{ $propertyOption->property->__('name') }}: {{ $propertyOption->__('name') }}</h4>

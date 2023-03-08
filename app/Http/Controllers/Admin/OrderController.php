@@ -23,6 +23,7 @@ class OrderController extends Controller
 	public function show(Order $order)
 	{
 		// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete
+		// Laravel: интернет магазин ч.35: Eloquent: whereHas
 		$skus = $order->skus()->withTrashed()->get();
 		return view('auth.orders.show', compact('order', 'skus'));
 	}

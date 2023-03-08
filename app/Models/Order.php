@@ -9,6 +9,10 @@ class Order extends Model
 	// Laravel: интернет магазин ч.23: Model Injection, new Class, ч.30: Collection, Объект Eloquent без сохранения
 	protected $fillable = ['user_id', 'currency_id', 'sum', 'coupon_id'];
 
+	// Laravel: интернет магазин ч.35: Eloquent: whereHas
+	/** 
+	 * Метод возвращает все товарные предложения, которые были заказаны
+	 */
 	public function skus()
 	{
 		return $this->belongsToMany(Sku::class)->withPivot(['count', 'price'])->withTimestamps();
@@ -38,6 +42,7 @@ class Order extends Model
 	{
 		$sum = 0;
 		// Laravel: интернет магазин ч.22: Кол-во товара, Soft Delete
+		// Laravel: интернет магазин ч.35: Eloquent: whereHas
 		foreach ($this->skus()->withTrashed()->get() as $sku) {
 			$sum += $sku->getPriceForCount();
 		}
@@ -50,6 +55,7 @@ class Order extends Model
 
 		$sum = 0;
 
+		// Laravel: интернет магазин ч.35: Eloquent: whereHas
 		foreach ($this->skus as $sku) {
 			$sum += $sku->price * $sku->countInOrder;
 		}
@@ -68,6 +74,8 @@ class Order extends Model
 		$this->phone = $phone;
 		$this->status = 1;
 		$this->sum = $this->getFullSum();
+
+		// +Laravel: интернет магазин ч.35: Eloquent: whereHas
 
 		$skus = $this->skus;
 		$this->save();
