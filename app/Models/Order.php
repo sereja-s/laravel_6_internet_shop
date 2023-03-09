@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
-	// Laravel: интернет магазин ч.23: Model Injection, new Class, ч.30: Collection, Объект Eloquent без сохранения
+	// Laravel: интернет магазин ч.23: Model Injection, new Class, +ч.30: Collection, Объект Eloquent без сохранения
+	// ч.38: Функционал купонов - админка
 	protected $fillable = ['user_id', 'currency_id', 'sum', 'coupon_id'];
 
 	// Laravel: интернет магазин ч.35: Eloquent: whereHas
@@ -24,6 +25,10 @@ class Order extends Model
 		return $this->belongsTo(Currency::class);
 	}
 
+	// Laravel: интернет магазин ч.38: Функционал купонов - админка
+	/** 
+	 * Метод реализует связь заказа с купоном (один-к-одному)
+	 */
 	public function coupon()
 	{
 		return $this->belongsTo(Coupon::class);

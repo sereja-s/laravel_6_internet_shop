@@ -29,6 +29,8 @@ class ViewServiceProvider extends ServiceProvider
 	{
 		// добавим категории для всех страниц в указанных шаблонах
 		View::composer(['layouts.master', 'categories'], 'App\ViewComposers\CategoriesComposer');
+
+		// Laravel: интернет магазин ч.38: Функционал купонов - админка
 		View::composer(['layouts.master', 'auth.coupons.form'], 'App\ViewComposers\CurrenciesComposer');
 		View::composer(['layouts.master'], 'App\ViewComposers\BestProductsComposer');
 
